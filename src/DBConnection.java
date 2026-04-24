@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 // import java.security.MessageDigest;
 // import java.security.NoSuchAlgorithmException;
 
@@ -36,7 +34,7 @@ public class DBConnection {
 
     public static void initDatabase() {
         try (Connection conn = getConnection();
-                var stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
 
             // Rooms table
             stmt.execute("""
@@ -84,7 +82,7 @@ public class DBConnection {
                     """);
 
             // Sample rooms if empty
-            var rs = stmt.executeQuery("SELECT COUNT(*) FROM rooms");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM rooms");
             rs.next();
             if (rs.getInt(1) == 0) {
                 stmt.execute(
@@ -100,7 +98,7 @@ public class DBConnection {
             }
 
             // Default users if empty: admin/admin and staff/staff
-            var ur = stmt.executeQuery("SELECT COUNT(*) FROM users");
+            ResultSet ur = stmt.executeQuery("SELECT COUNT(*) FROM users");
             ur.next();
             if (ur.getInt(1) == 0) {
                 // String adminHash = hashPassword("admin");
