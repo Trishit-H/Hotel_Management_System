@@ -26,11 +26,11 @@ public class LoginDialog extends JDialog {
     }
 
     private void buildUI() {
-        // ── Main panel with padding ──────────────────────────────────
+        // ---- Main panel with padding 
         JPanel main = new JPanel(new BorderLayout(0, 0));
         main.setBackground(new Color(30, 60, 114));
 
-        // ── Header banner ────────────────────────────────────────────
+        // ---- Header banner 
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(new Color(30, 60, 114));
         header.setBorder(BorderFactory.createEmptyBorder(24, 30, 16, 30));
@@ -47,7 +47,7 @@ public class LoginDialog extends JDialog {
         header.add(subtitle, BorderLayout.SOUTH);
         main.add(header, BorderLayout.NORTH);
 
-        // ── Form card ────────────────────────────────────────────────
+        // ---- Form card 
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.WHITE);
@@ -63,9 +63,8 @@ public class LoginDialog extends JDialog {
         usernameField.setFont(new Font("SansSerif", Font.PLAIN, 14));
         usernameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
         usernameField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(180, 180, 180)),
-            BorderFactory.createEmptyBorder(4, 8, 4, 8)
-        ));
+                BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                BorderFactory.createEmptyBorder(4, 8, 4, 8)));
         usernameField.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Password
@@ -78,9 +77,8 @@ public class LoginDialog extends JDialog {
         passwordField.setFont(new Font("SansSerif", Font.PLAIN, 14));
         passwordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
         passwordField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(180, 180, 180)),
-            BorderFactory.createEmptyBorder(4, 8, 4, 8)
-        ));
+                BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                BorderFactory.createEmptyBorder(4, 8, 4, 8)));
         passwordField.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Status label (shows error messages)
@@ -107,7 +105,7 @@ public class LoginDialog extends JDialog {
         usernameField.addActionListener(e -> passwordField.requestFocus());
 
         // Hint label
-        JLabel hint = new JLabel("Default: admin / admin123");
+        JLabel hint = new JLabel("Default: admin / admin");
         hint.setFont(new Font("SansSerif", Font.ITALIC, 11));
         hint.setForeground(new Color(150, 150, 150));
         hint.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -129,7 +127,7 @@ public class LoginDialog extends JDialog {
 
         main.add(card, BorderLayout.CENTER);
 
-        // ── Footer ───────────────────────────────────────────────────
+        // ----- Footer 
         JPanel footer = new JPanel();
         footer.setBackground(new Color(240, 244, 255));
         footer.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
@@ -161,14 +159,14 @@ public class LoginDialog extends JDialog {
             return;
         }
 
-        String hashedPassword = DBConnection.hashPassword(password);
+        // String hashedPassword = DBConnection.hashPassword(password);
 
         try (Connection conn = DBConnection.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(
-                "SELECT role FROM users WHERE username = ? AND password_hash = ?"
-            );
+                    "SELECT role FROM users WHERE username = ? AND password_hash = ?");
             ps.setString(1, username);
-            ps.setString(2, hashedPassword);
+            // ps.setString(2, hashedPassword);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {

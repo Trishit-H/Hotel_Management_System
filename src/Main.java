@@ -2,7 +2,8 @@ import javax.swing.SwingUtilities;
 
 /**
  * Hotel Management System - Entry Point
- * Shows login dialog first. Only launches HotelApp on successful authentication.
+ * Shows login dialog first. Only launches HotelApp on successful
+ * authentication.
  */
 public class Main {
     public static void main(String[] args) {

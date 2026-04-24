@@ -1,8 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+// import java.security.MessageDigest;
+// import java.security.NoSuchAlgorithmException;
 
 /**
  * Database connection using SQLite.
@@ -21,18 +21,18 @@ public class DBConnection {
      * SHA-256 hash utility for passwords.
      * Never store plain-text passwords.
      */
-    public static String hashPassword(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] bytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : bytes)
-                sb.append(String.format("%02x", b));
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 not available", e);
-        }
-    }
+    // public static String hashPassword(String password) {
+    // try {
+    // MessageDigest md = MessageDigest.getInstance("SHA-256");
+    // byte[] bytes = md.digest(password.getBytes());
+    // StringBuilder sb = new StringBuilder();
+    // for (byte b : bytes)
+    // sb.append(String.format("%02x", b));
+    // return sb.toString();
+    // } catch (NoSuchAlgorithmException e) {
+    // throw new RuntimeException("SHA-256 not available", e);
+    // }
+    // }
 
     public static void initDatabase() {
         try (Connection conn = getConnection();
@@ -99,17 +99,19 @@ public class DBConnection {
                         "INSERT INTO rooms (room_number, room_type, price, status) VALUES ('105', 'Deluxe', 2500, 'Available')");
             }
 
-            // Default users if empty: admin/admin123 and staff/staff123
+            // Default users if empty: admin/admin and staff/staff
             var ur = stmt.executeQuery("SELECT COUNT(*) FROM users");
             ur.next();
             if (ur.getInt(1) == 0) {
-                String adminHash = hashPassword("admin123");
-                String staffHash = hashPassword("staff123");
-                stmt.execute("INSERT INTO users (username, password_hash, role) VALUES ('admin', '" + adminHash
+                // String adminHash = hashPassword("admin");
+                // String staffHash = hashPassword("staff");
+                String adminPassword = "admin";
+                String staffPassword = "staff";
+                stmt.execute("INSERT INTO users (username, password_hash, role) VALUES ('admin', '" + adminPassword
                         + "', 'admin')");
-                stmt.execute("INSERT INTO users (username, password_hash, role) VALUES ('staff', '" + staffHash
+                stmt.execute("INSERT INTO users (username, password_hash, role) VALUES ('staff', '" + staffPassword
                         + "', 'staff')");
-                System.out.println("Default users created: admin/admin123 and staff/staff123");
+                System.out.println("Default users created: admin/admin and staff/staff");
             }
 
         } catch (SQLException e) {

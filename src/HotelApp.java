@@ -30,7 +30,8 @@ public class HotelApp extends JFrame {
 
         setTitle("Hotel Management System");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(960, 640);
+        setExtendedState(MAXIMIZED_BOTH);
+        // setSize(960, 640);
         setLocationRelativeTo(null);
 
         initDatabase();
@@ -102,7 +103,7 @@ public class HotelApp extends JFrame {
     }
 
     private void buildUI() {
-        // ── Top bar: user info + logout ───────────────────────────────
+        // ------ Top bar: user info + logout
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(new Color(30, 60, 114));
         topBar.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
@@ -138,7 +139,7 @@ public class HotelApp extends JFrame {
         topBar.add(appLabel, BorderLayout.WEST);
         topBar.add(rightPanel, BorderLayout.EAST);
 
-        // ── Tabs ─────────────────────────────────────────────────────
+        // --- Tabs
         tabs = new JTabbedPane();
         tabs.addTab("🛏 Rooms", buildRoomPanel());
         tabs.addTab("👤 Customers", buildCustomerPanel());
@@ -149,7 +150,7 @@ public class HotelApp extends JFrame {
             tabs.addTab("🔐 Users", buildUserManagementPanel());
         }
 
-        // ── Layout ───────────────────────────────────────────────────
+        // --- Layout
         setLayout(new BorderLayout());
         add(topBar, BorderLayout.NORTH);
         add(tabs, BorderLayout.CENTER);
@@ -251,9 +252,9 @@ public class HotelApp extends JFrame {
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // CUSTOMERS PANEL
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     private JPanel buildCustomerPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -318,9 +319,9 @@ public class HotelApp extends JFrame {
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // BOOKINGS PANEL
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     private JPanel buildBookingPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -439,9 +440,9 @@ public class HotelApp extends JFrame {
         }
     }
 
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // USER MANAGEMENT PANEL (Admin only)
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     private JPanel buildUserManagementPanel() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -483,7 +484,7 @@ public class HotelApp extends JFrame {
             int opt = JOptionPane.showConfirmDialog(panel, msg, "Add User", JOptionPane.OK_CANCEL_OPTION);
             if (opt == JOptionPane.OK_OPTION) {
                 try {
-                    String hash = DBConnection.hashPassword(new String(pass.getPassword()));
+                    String hash = new String(pass.getPassword());
                     var ps = conn
                             .prepareStatement("INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)");
                     ps.setString(1, uname.getText().trim());
@@ -528,7 +529,7 @@ public class HotelApp extends JFrame {
                         new Object[] { "New Password:", newPass }, "Change Password", JOptionPane.OK_CANCEL_OPTION);
                 if (opt == JOptionPane.OK_OPTION) {
                     try {
-                        String hash = DBConnection.hashPassword(new String(newPass.getPassword()));
+                        String hash = new String(newPass.getPassword());
                         var ps = conn.prepareStatement("UPDATE users SET password_hash = ? WHERE id = ?");
                         ps.setString(1, hash);
                         ps.setInt(2, id);
@@ -549,9 +550,9 @@ public class HotelApp extends JFrame {
         return panel;
     }
 
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     // LOAD DATA
-    // ═══════════════════════════════════════════════════════════════
+    // ===============================================================
     private void loadData() {
         try {
             roomModel.setRowCount(0);
