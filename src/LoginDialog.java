@@ -26,16 +26,16 @@ public class LoginDialog extends JDialog {
     }
 
     private void buildUI() {
-        // ---- Main panel with padding 
+        // ---- Main panel with padding
         JPanel main = new JPanel(new BorderLayout(0, 0));
         main.setBackground(new Color(30, 60, 114));
 
-        // ---- Header banner 
+        // ---- Header banner
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(new Color(30, 60, 114));
         header.setBorder(BorderFactory.createEmptyBorder(24, 30, 16, 30));
 
-        JLabel title = new JLabel("🏨 Hotel Management", SwingConstants.CENTER);
+        JLabel title = new JLabel("Hotel Management", SwingConstants.CENTER);
         title.setFont(new Font("SansSerif", Font.BOLD, 22));
         title.setForeground(Color.WHITE);
 
@@ -47,7 +47,7 @@ public class LoginDialog extends JDialog {
         header.add(subtitle, BorderLayout.SOUTH);
         main.add(header, BorderLayout.NORTH);
 
-        // ---- Form card 
+        // ---- Form card
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(Color.WHITE);
@@ -127,7 +127,7 @@ public class LoginDialog extends JDialog {
 
         main.add(card, BorderLayout.CENTER);
 
-        // ----- Footer 
+        // ----- Footer
         JPanel footer = new JPanel();
         footer.setBackground(new Color(240, 244, 255));
         footer.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
@@ -155,7 +155,7 @@ public class LoginDialog extends JDialog {
         String password = new String(passwordField.getPassword());
 
         if (username.isEmpty() || password.isEmpty()) {
-            statusLabel.setText("⚠ Please enter username and password.");
+            statusLabel.setText("Please enter username and password.");
             return;
         }
 
