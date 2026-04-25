@@ -41,13 +41,6 @@ public class HotelApp extends JFrame {
 
     private void initDatabase() {
         try {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                JOptionPane.showMessageDialog(this,
-                        "SQLite Driver not found! Please add sqlite-jdbc.jar to lib folder.");
-                throw new RuntimeException(e);
-            }
 
             conn = DriverManager.getConnection("jdbc:sqlite:hotel.db");
 
